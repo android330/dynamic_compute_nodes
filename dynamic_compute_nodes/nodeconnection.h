@@ -15,22 +15,26 @@
 class nodeConnection
 {
 private:
-    char* ip;
+    const char* ip;
 
     char buffer[1024] = {0};
 
     std::mutex mtx;
 
     std::thread *pThread = nullptr;
-public:
-    nodeConnection(char* ip);
-    ~nodeConnection();
+
+    char message[1024] = {0};
+
 
     void connectToNode();
-
     void startServer();
+public:
+    nodeConnection(const char* ip);
+    ~nodeConnection();
+
 
     std::string getConnection();
+    void setMessage(char msg[]);
 
 };
 

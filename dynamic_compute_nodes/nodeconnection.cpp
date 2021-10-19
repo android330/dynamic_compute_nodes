@@ -1,6 +1,6 @@
 #include "nodeconnection.h"
 
-nodeConnection::nodeConnection(char* ip)
+nodeConnection::nodeConnection(const char* ip)
 {
     this->ip = ip;
     pThread = new std::thread(&nodeConnection::connectToNode, this);
@@ -41,10 +41,12 @@ void nodeConnection::connectToNode(){
         return;
     }
 
+    strcpy(message, "Hello fromt the client");
     while(true){
-        send(sock , hello , strlen(hello) , 0 );
-        printf("Hello message sent\n");
+        send(sock , message , strlen(message) , 0 );
+        //printf("Hello message sent\n");
         mtx.try_lock();
+        memset(&buffer[0], 0, sizeof(buffer));
         valread = read( sock , buffer, 1024);
         mtx.unlock();
         printf("%s\n",buffer );
@@ -99,13 +101,16 @@ void  nodeConnection::startServer(){
         perror("accept");
         exit(EXIT_FAILURE);
     }
+
+    strcpy(message, "Hello from the server");
     while(true){
         mtx.try_lock();
+        memset(&buffer[0], 0, sizeof(buffer));
         valread = read( new_socket , buffer, 1024);
         mtx.unlock();
         printf("%s\n",buffer );
-        send(new_socket , hello , strlen(hello) , 0 );
-        printf("Hello message sent\n");
+        send(new_socket , message , strlen(message) , 0 );
+        //printf("Hello message sent\n");
     }
     return;
 }
@@ -117,6 +122,12 @@ std::string nodeConnection::getConnection(){
     return temp;
 }
 
+void nodeConnection::setMessage(char msg[]){
+    mtx.try_lock();
+    memset(&message[0], 0, sizeof(message));
+    strcpy(message, msg);
+    mtx.unlock();
+}
 /*
 int main(int argc, char const *argv[]){
     nodeConnection a((char*)"127.0.0.1");
