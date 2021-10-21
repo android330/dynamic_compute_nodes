@@ -7,7 +7,7 @@
 #include <sys/time.h>
 #include <math.h>
 
-#define TOTAL_TESTS 1000000
+#define TOTAL_TESTS 10000000
 
 sem_t sem;
 
@@ -54,6 +54,6 @@ int main(void) {
         pthread_join(cluster[i], NULL);
         printf("pi %d returned %f\n", i, res[i]);
     }
-
+    
     return 0;
 }
