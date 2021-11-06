@@ -30,7 +30,7 @@ void Idle::onRun()
 
 void Operate::onRun()
 {
-      if (digitalRead(3) == 1)
+      if (digitalRead(8) == 1)
       {
           std::cout << "Transition to DataSend State" << std::endl;
           this->context_->TransitionTo(new DataSend);
@@ -64,7 +64,7 @@ void Stop::onRun()
 
 int main(int argc, char const *argv[]){
     wiringPiSetup();
-    pinMode(3, INPUT);
+    pinMode(8, INPUT);
     Node_Context *nc = new Node_Context(new Idle, argv[1]);
     while (true)
         nc->start();
