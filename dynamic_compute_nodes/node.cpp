@@ -30,6 +30,7 @@ void Idle::onRun()
 
 void Operate::onRun()
 {
+    sleep(5);
     std::cout << "In Data Send Phase" << std::endl;
     if (digitalRead(8) == 1)
       {
