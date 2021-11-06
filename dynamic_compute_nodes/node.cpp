@@ -37,7 +37,7 @@ void Operate::onRun()
       }
 
 
-    for(int i = 0; i < CONNECTION_QUANTITY; i++)
+    for(int i = 0; i < this->context_->connections.size(); i++)
     {
         if(this->context_->connections.at(i)->getConnection()[0] - 48 == DATASEND_)
         {
