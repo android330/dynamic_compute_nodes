@@ -61,8 +61,8 @@ void Stop::onRun()
 }
 
 int main(int argc, char const *argv[]){
-    std::wiringPiSetup();
-    std::pinMode(2, INPUT);
+    wiringPiSetup();
+    pinMode(2, INPUT);
     Node_Context *nc = new Node_Context(new Idle, argv[1]);
     while (true)
         nc->start();
