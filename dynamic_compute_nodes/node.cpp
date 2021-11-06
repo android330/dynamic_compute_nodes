@@ -29,12 +29,11 @@ void Idle::onRun()
 
 void Operate::onRun()
 {
-    /* IN_FINAL
-     * if (digitalRead(2) == 1)
-     * {
-     *     this->context_->TransitionTo(new Operate);
-     * }
-     */
+      if (digitalRead(2) == 1)
+      {
+          this->context_->TransitionTo(new Operate);
+      }
+
 
     for(int i = 0; i < CONNECTION_QUANTITY; i++)
     {

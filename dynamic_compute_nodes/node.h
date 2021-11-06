@@ -3,9 +3,9 @@
 #include <thread>
 #include <time.h>
 
-/* IN_FINAL
- * #include <wiringPi.h>
- */
+
+  #include <wiringPi.h>
+
 
 #define CONNECTION_QUANTITY 1
 
@@ -51,10 +51,10 @@ public:
 
     Job job;
 
-    /* IN_FINAL
-     * wiringPiSetup();
-     * pinMode(2, INPUT);
-     */
+
+     wiringPiSetup();
+     pinMode(2, INPUT);
+
 
     Node_Context(Node_State* state, const char* ip) : state_(nullptr)
     {
