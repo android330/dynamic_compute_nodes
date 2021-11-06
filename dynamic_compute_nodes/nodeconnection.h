@@ -10,12 +10,15 @@
 #include <iostream>
 #include <mutex>
 #include <thread>
-#define PORT 8080
 
 class nodeConnection
 {
 private:
     const char* ip;
+
+    int port;
+
+    int* send_socket = nullptr;
 
     char buffer[1024] = {0};
 
@@ -25,16 +28,19 @@ private:
 
     char message[1024] = {0};
 
+    std::string readString = "9";
 
     void connectToNode();
     void startServer();
 public:
-    nodeConnection(const char* ip);
+    nodeConnection(const char* ip, const int port);
     ~nodeConnection();
 
 
     std::string getConnection();
     void setMessage(char msg[]);
+
+    void sendMessage();
 
 };
 
