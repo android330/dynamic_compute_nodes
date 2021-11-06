@@ -18,6 +18,7 @@ void Idle::onRun()
         this->context_->connections.at(i)->setMessage(buf);
         this->context_->connections.at(i)->sendMessage();
         if(this->context_->connections.at(i)->getConnection()[0] - 48 == ACCEPTEDCONNECTION_){
+            std::cout << "Transition to Operate State" << std::cout;
             this->context_->TransitionTo(new Operate);
             this->context_->job = Job();
             this->context_->job.startRun();
@@ -31,7 +32,8 @@ void Operate::onRun()
 {
       if (digitalRead(2) == 1)
       {
-          this->context_->TransitionTo(new Operate);
+          std::cout << "Transition to DataSend State" << std::cout;
+          this->context_->TransitionTo(new DataSend);
       }
 
 
