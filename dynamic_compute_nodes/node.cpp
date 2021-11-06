@@ -30,7 +30,8 @@ void Idle::onRun()
 
 void Operate::onRun()
 {
-      if (digitalRead(8) == 1)
+    std::cout << "In Data Send Phase" << std::endl;
+    if (digitalRead(8) == 1)
       {
           std::cout << "Transition to DataSend State" << std::endl;
           this->context_->TransitionTo(new DataSend);
