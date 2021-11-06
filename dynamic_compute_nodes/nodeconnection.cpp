@@ -50,7 +50,7 @@ void nodeConnection::connectToNode(){
         if (valread)
             readString = buffer;
         mtx.unlock();
-        printf("Client(Port-%u) Recieved: %s\n",port,buffer );
+        //printf("Client(Port-%u) Recieved: %s\n",port,buffer );
     }
     return;
 
@@ -105,7 +105,7 @@ void  nodeConnection::startServer(){
         if (valread)
             readString = buffer;
         mtx.unlock();
-        printf("Server(Port-%u) Recieved: %s\n",port,buffer );
+        //printf("Server(Port-%u) Recieved: %s\n",port,buffer );
     }
     return;
 }
