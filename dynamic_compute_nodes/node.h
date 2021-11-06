@@ -52,8 +52,7 @@ public:
     Job job;
 
 
-     wiringPiSetup();
-     pinMode(2, INPUT);
+
 
 
     Node_Context(Node_State* state, const char* ip) : state_(nullptr)
