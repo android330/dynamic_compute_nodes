@@ -57,11 +57,12 @@ void DataSend::onRun()
 
 void Stop::onRun()
 {
-
+    std::cout << "Program Exiting" << std::endl;
+    exit(1);
 }
 
 int main(int argc, char const *argv[]){
-    Node_Context *nc = new Node_Context(new Idle);
+    Node_Context *nc = new Node_Context(new Idle, argv[1]);
     while (true)
         nc->start();
 }

@@ -7,7 +7,7 @@
  * #include <wiringPi.h>
  */
 
-#define CONNECTION_QUANTITY 2
+#define CONNECTION_QUANTITY 1
 
 #define ACCEPTEDCONNECTION_ 0
 #define DATASEND_ 1
@@ -44,8 +44,8 @@ class Node_Context
 private:
     Node_State* state_;
 public:
-    const char *IPS[CONNECTION_QUANTITY] = {"127.0.0.1", "127.0.0.1"};
-    const int PORTS[CONNECTION_QUANTITY] = {8080, 8081};
+    const char *IPS[CONNECTION_QUANTITY] = {"127.0.0.1"};
+    const int PORTS[CONNECTION_QUANTITY] = {8080};
 
     std::vector<nodeConnection*> connections;
 
@@ -56,9 +56,10 @@ public:
      * pinMode(2, INPUT);
      */
 
-    Node_Context(Node_State* state) : state_(nullptr)
+    Node_Context(Node_State* state, const char* ip) : state_(nullptr)
     {
         this->TransitionTo(state);
+        IPS[0] = ip;
     }
 
     ~Node_Context(){delete state_;}
