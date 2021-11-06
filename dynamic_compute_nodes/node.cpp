@@ -39,7 +39,7 @@ void Operate::onRun()
 
     for(int i = 0; i < CONNECTION_QUANTITY; i++)
     {
-        if((int) this->context_->connections.at(i)->getConnection()[0] - 48 == DATASEND_)
+        if(this->context_->connections.at(i)->getConnection()[0] - 48 == DATASEND_)
         {
             this->context_->job.recievedData((std::string) this->context_->connections.at(i)->getConnection());
         }
