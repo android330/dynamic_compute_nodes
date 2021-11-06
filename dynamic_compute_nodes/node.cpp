@@ -22,7 +22,7 @@ void Idle::onRun()
             this->context_->TransitionTo(new Operate);
             this->context_->job = Job();
             this->context_->job.startRun();
-            break;
+            return;;
         }
     }
 
@@ -36,6 +36,7 @@ void Operate::onRun()
       {
           std::cout << "Transition to DataSend State" << std::endl;
           this->context_->TransitionTo(new DataSend);
+          return;
       }
 
 
