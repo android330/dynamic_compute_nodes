@@ -5,15 +5,16 @@
 class Job
 {
 private:
-    int PI;
+    int rpi;
     int hash();
 public:
-    Job(/* args */);
+    Job(std::string name);
     ~Job();
     Job(char* prevJob);
 
-    void run();
-    void stop();
-    char* getJob();
+    void startRun();
+    void endRun();
+    char* send();
+    char* toString();
 };
 
