@@ -22,7 +22,7 @@ void Idle::onRun()
             this->context_->TransitionTo(new Operate);
             this->context_->job = Job();
             this->context_->job.startRun();
-            break;
+            return;;
         }
     }
 
@@ -30,16 +30,19 @@ void Idle::onRun()
 
 void Operate::onRun()
 {
-      if (digitalRead(2) == 1)
+    sleep(2);
+    std::cout << "In Operate Phase" << std::endl;
+    if (digitalRead(8) == 1)
       {
           std::cout << "Transition to DataSend State" << std::endl;
           this->context_->TransitionTo(new DataSend);
+          return;
       }
 
 
-    for(int i = 0; i < CONNECTION_QUANTITY; i++)
+    for(int i = 0; i < this->context_->connections.size(); i++)
     {
-        if((int) this->context_->connections.at(i)->getConnection()[0] - 48 == DATASEND_)
+        if(this->context_->connections.at(i)->getConnection()[0] - 48 == DATASEND_)
         {
             this->context_->job.recievedData((std::string) this->context_->connections.at(i)->getConnection());
         }
@@ -64,7 +67,7 @@ void Stop::onRun()
 
 int main(int argc, char const *argv[]){
     wiringPiSetup();
-    pinMode(2, INPUT);
+    pinMode(8, INPUT);
     Node_Context *nc = new Node_Context(new Idle, argv[1]);
     while (true)
         nc->start();
