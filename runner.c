@@ -8,7 +8,7 @@
 #include <math.h>
 
 #define TOTAL_TESTS 10000000
-
+int semNum = 3;
 sem_t sem;
 
 typedef struct _args{
@@ -40,7 +40,7 @@ int main(void) {
     struct timeval t1;
     gettimeofday(&t1, NULL);
     srand(t1.tv_sec * t1.tv_usec);
-    sem_init(&sem, 0, 2);
+    sem_init(&sem, 0, semNum);
     pthread_t cluster[5];
     float res[5];
     for (int i = 0; i < 5; i++) {

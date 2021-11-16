@@ -12,11 +12,14 @@ class Job
 {
 private:
     int rpi;
-    int hash();
+    int getHash();
     int pid;
     void* ret;
-    Args* args;
+    // Args* args;
     std::string name;
+    std::string hash;
+    std::string args;
+    std::string cmp;
     
 public:
     Job(std::string name, int rpi);

@@ -11,28 +11,23 @@ Job::Job(std::string name, int rpi)
 {
     this->rpi = rpi;
     this->name = name;
-    this->args = new Args();
+    // this->args = new Args();
 }
 
 Job::~Job()
 {
-    delete args;
+    // delete args;
 }
 
 Job::Job(char* prevJob) {
-    // std::stringstream ss(prevJob);
-    // std::string buffer;
-    // std::string args;
-    // std::string name;
-    // getline(ss, name);
-    // getline(ss, args);
-    // std::ofstream outputFile;
-    // outputFile.open(name);
-    // while (ss >> buffer)
-    // {
-        
-    // }
-    
+    std::stringstream ss(prevJob);
+    getline(ss, name);
+    getline(ss, hash);
+    getline(ss, args);
+    getline(ss, cmp);
+    std::ofstream outputFile;
+    outputFile.open(name);
+
 }
 
 void *jobLoop (void* arg) {
