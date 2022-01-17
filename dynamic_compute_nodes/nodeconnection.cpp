@@ -42,15 +42,12 @@ void nodeConnection::connectToNode(){
     }
 
     send_socket = &sock;
-    strcpy(message, "Hello");
     while(true){
-        mtx.try_lock();
         memset(&buffer[0], 0, sizeof(buffer));
         valread = read( sock , buffer, 1024);
         if (valread)
             readString = buffer;
-        mtx.unlock();
-        //printf("Client(Port-%u) Recieved: %s\n",port,buffer );
+        printf("Client(Port-%u) Recieved: %s\n",port,buffer );
     }
     return;
 
@@ -97,15 +94,12 @@ void  nodeConnection::startServer(){
     }
 
     send_socket = &new_socket;
-    strcpy(message, "Hello");
     while(true){
-        mtx.try_lock();
         memset(&buffer[0], 0, sizeof(buffer));
         valread = read( new_socket , buffer, 1024);
         if (valread)
             readString = buffer;
-        mtx.unlock();
-        //printf("Server(Port-%u) Recieved: %s\n",port,buffer );
+        printf("Server(Port-%u) Recieved: %s\n",port,buffer );
     }
     return;
 }
@@ -115,10 +109,8 @@ std::string nodeConnection::getConnection(){
 }
 
 void nodeConnection::setMessage(char msg[]){
-    mtx.try_lock();
     memset(&message[0], 0, sizeof(message));
     strcpy(message, msg);
-    mtx.unlock();
 }
 
 void nodeConnection::sendMessage(){

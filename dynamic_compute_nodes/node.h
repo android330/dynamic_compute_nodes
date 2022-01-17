@@ -3,8 +3,9 @@
 #include <thread>
 #include <time.h>
 
-
+#ifdef __arm__
 #include <wiringPi.h>
+#endif
 
 
 #define CONNECTION_QUANTITY 1
