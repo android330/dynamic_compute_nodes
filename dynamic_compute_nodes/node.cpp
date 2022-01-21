@@ -30,8 +30,8 @@ void Idle::onRun()
 
 void Operate::onRun()
 {
-    sleep(2);
-    std::cout << "In Operate Phase" << std::endl;
+    
+    //std::cout << "In Operate Phase" << std::endl;
 
 #ifdef __arm__
     if (digitalRead(8) == 1)

@@ -47,6 +47,10 @@ void nodeConnection::connectToNode(){
         valread = read( sock , buffer, 1024);
         if (valread)
             readString = buffer;
+        else {
+            printf("Client(Port-%u) recieved disconnect...\n     transitioning to server...\n", port);
+            connectToNode();
+        }
         printf("Client(Port-%u) Recieved: %s\n",port,buffer );
     }
     return;
@@ -99,6 +103,10 @@ void  nodeConnection::startServer(){
         valread = read( new_socket , buffer, 1024);
         if (valread)
             readString = buffer;
+        else {
+            printf("Server(Port-%u) has found client disconnected\n     restarting server...", port);
+            connectToNode();
+        }
         printf("Server(Port-%u) Recieved: %s\n",port,buffer );
     }
     return;
