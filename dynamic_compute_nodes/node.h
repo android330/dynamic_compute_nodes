@@ -10,9 +10,10 @@
 
 #define CONNECTION_QUANTITY 1
 
-#define ACCEPTEDCONNECTION_ 0
-#define DATASEND_ 1
-#define CLOSE_ 2
+#define SEEKINGCONNECTION_ 0
+#define ACCEPTEDCONNECTION_ 1
+#define DATASEND_ 2
+#define CLOSE_ 3
 
 class Job{
 public:
@@ -83,6 +84,7 @@ public:
 class Idle : public Node_State{
 private:
     bool startup = false;
+    clock_t start;
 public:
     void onRun() override;};
 class Operate : public Node_State{void onRun() override;};
