@@ -6,6 +6,7 @@ struct Args
     {
         bool stop;
         int out;
+        std::string arg;
         Args() : stop(false), out(0){};
     };
 class Job
@@ -15,12 +16,9 @@ private:
     int getHash();
     int pid;
     void* ret;
-    // Args* args;
+    Args* args;
     std::string name;
-    std::string hash;
-    std::string args;
-    std::string cmp;
-    
+    void run(Args* args);
 public:
     Job(std::string name, int rpi);
     ~Job();
