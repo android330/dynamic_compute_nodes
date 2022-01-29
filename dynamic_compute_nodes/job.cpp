@@ -5,6 +5,12 @@
 #include "time.h"
 #include "math.h"
 
+/*
+    Things that are still to do
+    * This only works for one job
+    * There is no way to run arbitrary cmds
+*/
+
 Job::Job(std::string prevJob) {
     std::stringstream ss = std::stringstream(prevJob);
     ss >> name >> res >> max >> pos;
