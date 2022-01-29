@@ -1,76 +1,42 @@
 #include "job.hpp"
 #include <sstream>
-#include <string>
-#include <fstream>
-#include <cstdio>
-#include <spawn.h>
-#include <signal.h>
-#include <unistd.h>
 #include <thread>
-#include <mutex>
+#include "stdlib.h"
+#include "time.h"
+#include "math.h"
 
-Job::Job(std::string name, int rpi)
-{
-    this->rpi = rpi;
-    this->name = name;
-    
+Job::Job(std::string prevJob) {
+    std::stringstream ss = std::stringstream(prevJob);
+    ss >> name >> res >> max >> pos;
+    srand(time(0));
+    stop = false;
 }
 
-Job::~Job()
-{
-    // delete args;
+void startRun() {
+    std::thread *m_thread = new std::thread(Job::monteCarlo);
 }
 
-Job::Job(char* prevJob) {
-    std::stringstream ss(prevJob);
-    getline(ss, name);
-    // getline(ss, hash);
-    std::string name;
-    getline(ss, name);
-    // getline(ss, arg_s);
-    std::ofstream outputFile;
-    // outputFile.open(name);
-    // while (ss >> buffer)
-    // {
-        
-    // }
-    args->out = 0;
-    args->stop = false;
-    // args->arg = arg_s;
-}
-
-// void *jobLoop (void* arg) {
-//     int out = 0;
-//     while(!myArgs->stop) {
-//         sleep(1);
-//         out++;
-//     }
-//     myArgs->out = out;
-//     return nullptr;
-// }
-
-void Job::startRun() {
-    std::thread thread_obj(run, args);
-}
-
-void Job::run(Args* args) {
-    
+void Job::monteCarlo() {
+    for (int i = pos; i < max; i++) {
+        int x = static_cast <float>(rand()) / static_cast <float> (RAND_MAX);
+        int y = static_cast <float>(rand()) / static_cast <float> (RAND_MAX);
+        if (sqrt(x*x + y * y) < 1) count++;
+        if (stop) return;
+    }
+    res = (float)count / (float)max;
 }
 
 void Job::endRun() {
-    args->stop = true;
-    sleep(2);
-    pthread_exit(NULL);
+    stop = true;
 }
 
-int Job::getVal() {
-    return args->out;
+float Job::getVal() {
+    res = (float)count / (float)max;
+    return res;
 }
 
 std::string Job::toString() {
-    std::string out = "";
-    out += name;
-    out += " " + rpi;
-    out += " " + args->out;
+    char out[2048];
+    sprintf(out, "%s %f %d %d %d %d", name, res, max, pos, count);
+    return out;
 }
-

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+#include <string>
 
 struct Args
     {
@@ -12,22 +13,19 @@ struct Args
 class Job
 {
 private:
-    int rpi;
-    int getHash();
-    int pid;
-    void* ret;
-    Args* args;
+    float res;
+    int max;
+    int pos;
+    int count;
     std::string name;
-    void run(Args* args);
+    bool stop;
 public:
-    Job(std::string name, int rpi);
     ~Job();
-    Job(char* prevJob);
+    Job(std::string prevJob);
 
+    void monteCarlo();
     void startRun();
     void endRun();
-    int getVal();
-    // char* send();
+    float getVal();
     std::string toString();
 };
-
