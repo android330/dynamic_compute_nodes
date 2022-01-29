@@ -6,12 +6,14 @@
 #include <spawn.h>
 #include <signal.h>
 #include <unistd.h>
+#include <thread>
+#include <mutex>
 
 Job::Job(std::string name, int rpi)
 {
     this->rpi = rpi;
     this->name = name;
-    // this->args = new Args();
+    
 }
 
 Job::~Job()
@@ -22,28 +24,37 @@ Job::~Job()
 Job::Job(char* prevJob) {
     std::stringstream ss(prevJob);
     getline(ss, name);
-    getline(ss, hash);
-    getline(ss, args);
-    getline(ss, cmp);
+    // getline(ss, hash);
+    std::string name;
+    getline(ss, name);
+    // getline(ss, arg_s);
     std::ofstream outputFile;
-    outputFile.open(name);
-
+    // outputFile.open(name);
+    // while (ss >> buffer)
+    // {
+        
+    // }
+    args->out = 0;
+    args->stop = false;
+    // args->arg = arg_s;
 }
 
-void *jobLoop (void* arg) {
-    Args* myArgs = (Args*)arg;
-    int out = 0;
-    while(!myArgs->stop) {
-        sleep(1);
-        out++;
-    }
-    myArgs->out = out;
-    return nullptr;
-}
+// void *jobLoop (void* arg) {
+//     int out = 0;
+//     while(!myArgs->stop) {
+//         sleep(1);
+//         out++;
+//     }
+//     myArgs->out = out;
+//     return nullptr;
+// }
 
 void Job::startRun() {
-    pthread_t thread;
-    pthread_create(&thread, NULL, jobLoop, NULL);
+    std::thread thread_obj(run, args);
+}
+
+void Job::run(Args* args) {
+    
 }
 
 void Job::endRun() {

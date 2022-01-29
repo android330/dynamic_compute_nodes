@@ -32,12 +32,15 @@ void Operate::onRun()
 {
     sleep(2);
     std::cout << "In Operate Phase" << std::endl;
+
+#ifdef __arm__
     if (digitalRead(8) == 1)
       {
           std::cout << "Transition to DataSend State" << std::endl;
           this->context_->TransitionTo(new DataSend);
           return;
       }
+#endif
 
 
     for(int i = 0; i < this->context_->connections.size(); i++)
@@ -66,8 +69,10 @@ void Stop::onRun()
 }
 
 int main(int argc, char const *argv[]){
+#ifdef __arm__
     wiringPiSetup();
     pinMode(8, INPUT);
+#endif
     Node_Context *nc = new Node_Context(new Idle, argv[1]);
     while (true)
         nc->start();
