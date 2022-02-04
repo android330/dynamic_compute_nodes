@@ -13,9 +13,19 @@
 
 Job::Job(std::string prevJob) {
     std::stringstream ss = std::stringstream(prevJob);
-    ss >> name >> res >> max >> pos;
+    ss >> name >> res >> max >> pos >> count;
     srand(time(0));
     stop = false;
+}
+
+Job::Job() {
+    srand(time(0));
+    name = "job" + rand();
+    res = 0;
+    max = 0;
+    pos = 0;
+    count = 0;
+    stop = true;
 }
 
 void startRun() {
@@ -37,12 +47,20 @@ void Job::endRun() {
 }
 
 float Job::getVal() {
+    if (max == 0) return -1;
+    std::cerr << "attempted to use a max of 0. Did you initialize the job?\n";
     res = (float)count / (float)max;
     return res;
 }
 
-std::string Job::toString() {
+std::string Job::send() {
     char out[2048];
     sprintf(out, "%s %f %d %d %d %d", name, res, max, pos, count);
     return out;
+}
+
+void Job::recievedData(std::string data) {
+    std::stringstream ss = std::stringstream(data);
+    ss >> name >> res >> max >> pos >> count;
+    stop = false;
 }

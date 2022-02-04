@@ -38,7 +38,7 @@ public:
 
 
     std::string getConnection();
-    void setMessage(char msg[]);
+    void setMessage(const char msg[]);
 
     void sendMessage();
 

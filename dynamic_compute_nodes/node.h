@@ -2,6 +2,7 @@
 #include <vector>
 #include <thread>
 #include <time.h>
+#include "job.hpp"
 
 #ifdef __arm__
 #include <wiringPi.h>
@@ -14,13 +15,6 @@
 #define DATASEND_ 1
 #define CLOSE_ 2
 
-class Job{
-public:
-    void startRun(){std::cout << "Job Started Running" << std::endl;}
-    void endRun(){std::cout << "Job Ended Running" << std::endl;}
-    void recievedData(std::string s){std::cout << "Job Recieved: " << s << std::endl;}
-    char* send(){std::cout << "Job Data Sent" << std::endl; return (char*) "Job Data";}
-};
 
 class Node_Context;
 
@@ -51,10 +45,6 @@ public:
     std::vector<nodeConnection*> connections;
 
     Job job;
-
-
-
-
 
     Node_Context(Node_State* state, const char* ip) : state_(nullptr)
     {

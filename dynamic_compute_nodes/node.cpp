@@ -56,7 +56,7 @@ void DataSend::onRun()
 {
     for(int i = 0; i < CONNECTION_QUANTITY; i++)
     {
-        this->context_->connections.at(i)->setMessage(this->context_->job.send());
+        this->context_->connections.at(i)->setMessage(context_->job.send().c_str());
         this->context_->connections.at(i)->sendMessage();
         this->context_->TransitionTo(new Stop);
     }

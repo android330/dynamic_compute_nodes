@@ -108,7 +108,7 @@ std::string nodeConnection::getConnection(){
     return readString;
 }
 
-void nodeConnection::setMessage(char msg[]){
+void nodeConnection::setMessage(const char* msg){
     memset(&message[0], 0, sizeof(message));
     strcpy(message, msg);
 }

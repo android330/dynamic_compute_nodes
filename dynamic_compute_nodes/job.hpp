@@ -21,11 +21,13 @@ private:
     bool stop;
 public:
     ~Job();
+    Job();
     Job(std::string prevJob);
 
     void monteCarlo();
     void startRun();
     void endRun();
     float getVal();
-    std::string toString();
+    std::string send();
+    void recievedData(std::string data);
 };
