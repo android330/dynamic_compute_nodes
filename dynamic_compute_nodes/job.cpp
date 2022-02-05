@@ -22,10 +22,10 @@ Job::Job() {
     srand(time(0));
     name = "job";
     res = 0;
-    max = 0;
+    max = 10;
     pos = 0;
     count = 0;
-    stop = true;
+    stop = false;
 }
 
 Job::~Job() {
@@ -59,8 +59,8 @@ float Job::getVal() {
 
 std::string Job::send() {
     char out[2048];
-    sprintf(out, "%s %f %d %d %d", name.c_str(), res, max, pos, count);
-    return out;
+    sprintf(out, "%s %f %d %d %d", name.data(), res, max, pos, count);
+    return std::string(out);
 }
 
 void Job::recievedData(std::string data) {
