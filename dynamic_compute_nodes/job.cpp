@@ -28,8 +28,12 @@ Job::Job() {
     stop = true;
 }
 
-void startRun() {
-    std::thread *m_thread = new std::thread(Job::monteCarlo);
+Job::~Job() {
+    stop = true;
+}
+
+void Job::startRun() {
+    std::thread *m_thread = new std::thread(&Job::monteCarlo, this);
 }
 
 void Job::monteCarlo() {
