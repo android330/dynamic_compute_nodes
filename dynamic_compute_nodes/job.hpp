@@ -12,14 +12,14 @@ struct Args
     };
 class Job
 {
-private:
+public:
     float res;
     int max;
     int pos;
     int count;
     std::string name;
     bool stop;
-public:
+// public:
     ~Job();
     Job();
     Job(std::string prevJob);
