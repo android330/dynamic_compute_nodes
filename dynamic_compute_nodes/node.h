@@ -62,6 +62,7 @@ public:
 
         this->state_ = state;
         this->state_->set_context(this);
+//	std::cout << this->job->name << std::endl;
     }
 
     void start()

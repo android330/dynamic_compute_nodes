@@ -1,3 +1,5 @@
+//created by ANdrew
+
 #include "node.h"
 
 void Idle::onRun()
@@ -27,9 +29,9 @@ void Idle::onRun()
             this->context_->connections.at(i)->sendMessage();
 
             std::cout << "Transition to Operate State" << std::endl;
-            this->context_->TransitionTo(new Operate);
             this->context_->job = new Job();
             this->context_->job->startRun();
+	    this->context_->TransitionTo(new Operate);
             return;
         }
 
@@ -40,9 +42,9 @@ void Idle::onRun()
             this->context_->connections.at(i)->sendMessage();
 
             std::cout << "Transition to Operate State" << std::endl;
-            this->context_->TransitionTo(new Operate);
             this->context_->job = new Job();
             this->context_->job->startRun();
+	    this->context_->TransitionTo(new Operate);
             return;
         }
 
@@ -52,9 +54,9 @@ void Idle::onRun()
     if ((double)(clock() - start) * 1000.0 / CLOCKS_PER_SEC > 10000) {
         printf("10 seconds elapsed - ");
         std::cout << "Transition to Operate State" << std::endl;
-        this->context_->TransitionTo(new Operate);
         this->context_->job = new Job();
         this->context_->job->startRun();
+	this->context_->TransitionTo(new Operate);
         return;
     }
 }
@@ -78,7 +80,7 @@ void Operate::onRun()
     {
         if(this->context_->connections.at(i)->getConnection()[0] - 48 == DATASEND_)
         {
-            this->context_->job->recievedData((std::string) this->context_->connections.at(i)->getConnection());
+           // this->context_->job->recievedData((std::string) this->context_->connections.at(i)->getConnection());
         }
 
         //if other conneciton is seeking to create connection then send job information TODO, and signal accepted connection

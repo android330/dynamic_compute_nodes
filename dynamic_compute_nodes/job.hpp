@@ -3,6 +3,7 @@
 #include <iostream>
 #include <string>
 
+/*
 struct Args
     {
         bool stop;
@@ -10,6 +11,7 @@ struct Args
         std::string arg;
         Args() : stop(false), out(0){};
     };
+*/
 class Job
 {
 private:
