@@ -67,7 +67,7 @@ void Operate::onRun()
     //std::cout << "In Operate Phase" << std::endl;
 
 #ifdef __arm__
-    if (digitalRead(8) == 1)
+    if (digitalRead(25) == 1)
       {
           std::cout << "Transition to DataSend State" << std::endl;
           this->context_->TransitionTo(new DataSend);
@@ -112,7 +112,7 @@ void Stop::onRun()
 int main(int argc, char const *argv[]){
 #ifdef __arm__
     wiringPiSetup();
-    pinMode(8, INPUT);
+    pinMode(25, INPUT);
 #endif
     Node_Context *nc = new Node_Context(new Idle, argv[1]);
     while (true)
