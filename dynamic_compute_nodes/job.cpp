@@ -20,7 +20,7 @@ Job::Job(std::string prevJob) {
 
 Job::Job() {
     srand(time(0));
-    name = "job" + rand();
+    name = "job";
     res = 0;
     max = 0;
     pos = 0;
@@ -59,7 +59,7 @@ float Job::getVal() {
 
 std::string Job::send() {
     char out[2048];
-    sprintf(out, "%s %f %d %d %d %d", name, res, max, pos, count);
+    sprintf(out, "%s %f %d %d %d", name.c_str(), res, max, pos, count);
     return out;
 }
 
