@@ -38,12 +38,12 @@ void Job::startRun() {
 
 void Job::monteCarlo() {
     for (int i = pos; i < max; i++) {
-        int x = static_cast <float>(rand()) / static_cast <float> (RAND_MAX);
-        int y = static_cast <float>(rand()) / static_cast <float> (RAND_MAX);
-        if (sqrt(x*x + y * y) < 1) count++;
+        float x = (float)rand() / (float)RAND_MAX;
+        float y = (float)rand() / (float)RAND_MAX;
+        if (sqrt(x*x + y*y) < 1.0) count++;
         if (stop) return;
     }
-    res = (float)count / (float)max;
+    res = 4 * (float)count / (float)max;
 }
 
 void Job::endRun() {
@@ -53,7 +53,7 @@ void Job::endRun() {
 float Job::getVal() {
     if (max == 0) return -1;
     std::cerr << "attempted to use a max of 0. Did you initialize the job?\n";
-    res = (float)count / (float)max;
+    res = 4 * (float)count / (float)max;
     return res;
 }
 
