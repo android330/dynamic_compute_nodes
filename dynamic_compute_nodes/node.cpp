@@ -28,8 +28,8 @@ void Idle::onRun()
 
             std::cout << "Transition to Operate State" << std::endl;
             this->context_->TransitionTo(new Operate);
-            this->context_->job = Job();
-            this->context_->job.startRun();
+            this->context_->job = new Job();
+            this->context_->job->startRun();
             return;
         }
 
@@ -41,8 +41,8 @@ void Idle::onRun()
 
             std::cout << "Transition to Operate State" << std::endl;
             this->context_->TransitionTo(new Operate);
-            this->context_->job = Job();
-            this->context_->job.startRun();
+            this->context_->job = new Job();
+            this->context_->job->startRun();
             return;
         }
 
@@ -53,8 +53,8 @@ void Idle::onRun()
         printf("10 seconds elapsed - ");
         std::cout << "Transition to Operate State" << std::endl;
         this->context_->TransitionTo(new Operate);
-        this->context_->job = Job();
-        this->context_->job.startRun();
+        this->context_->job = new Job();
+        this->context_->job->startRun();
         return;
     }
 }
@@ -78,7 +78,7 @@ void Operate::onRun()
     {
         if(this->context_->connections.at(i)->getConnection()[0] - 48 == DATASEND_)
         {
-            this->context_->job.recievedData((std::string) this->context_->connections.at(i)->getConnection());
+            this->context_->job->recievedData((std::string) this->context_->connections.at(i)->getConnection());
         }
 
         //if other conneciton is seeking to create connection then send job information TODO, and signal accepted connection
@@ -95,7 +95,7 @@ void DataSend::onRun()
 {
     for(int i = 0; i < CONNECTION_QUANTITY; i++)
     {
-        this->context_->connections.at(i)->setMessage(context_->job.send().c_str());
+        this->context_->connections.at(i)->setMessage(context_->job->send().c_str());
         this->context_->connections.at(i)->sendMessage();
         this->context_->TransitionTo(new Stop);
     }

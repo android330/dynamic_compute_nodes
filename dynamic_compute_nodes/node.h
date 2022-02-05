@@ -45,7 +45,7 @@ public:
 
     std::vector<nodeConnection*> connections;
 
-    Job job;
+    Job* job;
 
     Node_Context(Node_State* state, const char* ip) : state_(nullptr)
     {
