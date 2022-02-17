@@ -122,7 +122,7 @@ int main(int argc, char const *argv[]){
     pinMode(25, INPUT);
 #endif
     //char const 
-    Node_Context *nc = new Node_Context(new Idle, argv[1]);
+    Node_Context *nc = new Node_Context(new Idle, argv);
     while (true)
         nc->start();
 }

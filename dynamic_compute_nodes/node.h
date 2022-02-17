@@ -47,12 +47,12 @@ public:
 
     Job* job;
 
-    Node_Context(Node_State* state, const char* ip) : state_(nullptr)
+    Node_Context(Node_State* state, const char* ip[]) : state_(nullptr)
     {
         this->TransitionTo(state);
-        IPS[0] = ip;
-        //for(int i = 0; i < CONNECTION_QUANTITY; i++)
-            //IPS[i] = 
+        //IPS[0] = ip;
+        for (int i = 0; i < CONNECTION_QUANTITY; i++)
+            IPS[i] = ip[i + 1];
     }
 
     ~Node_Context(){delete state_;}
