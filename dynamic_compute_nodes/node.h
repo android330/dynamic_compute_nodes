@@ -51,6 +51,8 @@ public:
     {
         this->TransitionTo(state);
         IPS[0] = ip;
+        //for(int i = 0; i < CONNECTION_QUANTITY; i++)
+            //IPS[i] = 
     }
 
     ~Node_Context(){delete state_;}
