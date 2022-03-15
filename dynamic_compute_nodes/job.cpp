@@ -37,7 +37,7 @@ void Job::startRun() {
 }
 
 void Job::monteCarlo() {
-    for (int i = pos; i < max; i++) {
+    for (pos; pos < max; pos++) {
         float x = (float)rand() / (float)RAND_MAX;
         float y = (float)rand() / (float)RAND_MAX;
         if (sqrt(x*x + y*y) < 1.0) count++;
