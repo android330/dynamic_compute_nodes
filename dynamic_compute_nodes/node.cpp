@@ -115,7 +115,7 @@ void Stop::onRun()
 #ifdef __arm__
     if (digitalRead(25) == 1)
     {
-        std::cout << "Power Levels Suitiable" << std::endl << "Transition to Operate State" << std::endl;
+        std::cout << "Power Levels Suitiable" << std::endl << "Transition back to Operate State" << std::endl;
         this->context_->TransitionTo(new Operate);
         return;
     }
