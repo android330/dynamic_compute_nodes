@@ -22,7 +22,7 @@ Job::Job() {
     srand(time(0));
     name = "job";
     res = 0;
-    max = 100000;
+    max = 10000000;
     pos = 0;
     count = 0;
     stop = false;
