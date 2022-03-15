@@ -10,6 +10,8 @@
 #include <iostream>
 #include <mutex>
 #include <thread>
+#include <netdb.h> //Hostname Recognition
+
 
 class nodeConnection
 {

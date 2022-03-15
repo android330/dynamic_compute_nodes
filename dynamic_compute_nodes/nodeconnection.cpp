@@ -18,17 +18,35 @@ void nodeConnection::connectToNode(){
     int sock = 0, valread;
     struct sockaddr_in serv_addr;
 
-    ///=printf("test1\n");
+    ///sock initilization test
     if ((sock = socket(AF_INET, SOCK_STREAM, 0)) < 0)
     {
         printf("\n Socket creation error \n");
         return;
     }
 
+    //assumes IPv4, and sets port
     serv_addr.sin_family = AF_INET;
     serv_addr.sin_port = htons(port);
 
-    //printf("test2\n");
+    //Checks if the first character of the ip alphabatical, if it is then it assuems that it is a hostname
+    if(isalpha(ip[0]))
+    {
+        //resolves hostname
+        struct hostent *hostname;
+        hostname = gethostbyname(ip);
+        if(hostname == NULL)
+        {
+            printf("\nInvalid Hostname\n");
+            return;
+        }
+        else
+        {
+            //sets new ip to the resolved hostname if it was valid
+            this->ip = inet_ntoa(*((struct in_addr *) hostname->h_addr_list[0]));
+        }
+    }
+
     // Convert IPv4 and IPv6 addresses from text to binary form
     if(inet_pton(AF_INET, ip, &serv_addr.sin_addr)<=0)
     {
@@ -36,7 +54,6 @@ void nodeConnection::connectToNode(){
         return;
     }
 
-    //printf("test3\n");
     //if the client module is unable to connect, it starts a server module for the client on another node to connect to
     if (connect(sock, (struct sockaddr *)&serv_addr, sizeof(serv_addr)) < 0)
     {
@@ -145,4 +162,5 @@ void nodeConnection::setMessage(const char* msg){
 void nodeConnection::sendMessage(){
     if (send_socket != nullptr)
         send(*send_socket , message , strlen(message) , 0 );
+    memset(&message[0], 0, sizeof(message));
 }
