@@ -85,7 +85,8 @@ void Operate::onRun()
         if(this->context_->connections.at(i)->getConnection()[0] - 48 == DATASEND_)
         {
             std::string sendTemp = this->context_->connections.at(i)->getConnection();
-            this->context_->job->recievedData(sendTemp.substr(1, sendTemp.length() - 1));
+	    if (sendTemp.length() > 1)
+                this->context_->job->recievedData(sendTemp.substr(1, sendTemp.length() - 1));
         }
 
         //if other conneciton is seeking to create connection then send job information TODO, and signal accepted connection
