@@ -59,7 +59,7 @@ float Job::getVal() {
 
 std::string Job::send() {
     char out[2048];
-    sprintf(out, "%s %f %d %d %d", name.data(), res, max, pos, count);
+    snprintf(out, 2048, "%s %f %d %d %d", name.data(), res, max, pos, count);
     return std::string(out);
 }
 

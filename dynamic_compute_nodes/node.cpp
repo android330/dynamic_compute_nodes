@@ -102,13 +102,20 @@ void Operate::onRun()
 
 void DataSend::onRun()
 {
-    for(int i = 0; i < CONNECTION_QUANTITY; i++)
+    
+	
+	for(int i = 0; i < CONNECTION_QUANTITY; i++)
     {
-        std::string sendTemp = std::to_string(DATASEND_) + context_->job->send();
+        
+	if (context_->job == nullptr) {
+		std::cout << "laid off";
+		continue;
+	}
+	std::string sendTemp = std::to_string(DATASEND_) + context_->job->send();
         this->context_->connections.at(i)->setMessage(sendTemp.c_str());
         this->context_->connections.at(i)->sendMessage();
-        this->context_->TransitionTo(new Stop);
     }
+    this->context_->TransitionTo(new Stop);
 }
 
 void Stop::onRun()
