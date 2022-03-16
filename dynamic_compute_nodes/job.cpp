@@ -42,7 +42,7 @@ void Job::monteCarlo() {
         float y = (float)rand() / (float)RAND_MAX;
         if (sqrt(x*x + y*y) < 1.0) count++;
         if (pos % 1000000 == 0) {
-		res = 4.0*(float)count / (float)max;
+		res = 4.0*(float)count / (float)pos;
 		printf("res %f\n", res);
 	}
 	if (stop) return;
