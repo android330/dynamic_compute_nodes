@@ -9,7 +9,7 @@
 #endif
 
 
-#define CONNECTION_QUANTITY 5
+#define CONNECTION_QUANTITY 4
 
 #define SEEKINGCONNECTION_ 0
 #define ACCEPTEDCONNECTION_ 1
@@ -40,8 +40,8 @@ class Node_Context
 private:
     Node_State* state_;
 public:
-    const char *IPS[CONNECTION_QUANTITY] = {"127.0.0.1", "127.0.0.1", "127.0.0.1", "127.0.0.1", "127.0.0.1"};
-    const int PORTS[CONNECTION_QUANTITY] = {8080, 8080, 8080, 8080, 8080};
+    const char *IPS[CONNECTION_QUANTITY] = {"127.0.0.1", "127.0.0.1", "127.0.0.1", "127.0.0.1"};
+    const int PORTS[CONNECTION_QUANTITY] = {8080, 8080, 8080, 8080};
 
     std::vector<nodeConnection*> connections;
 
