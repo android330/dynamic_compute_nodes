@@ -4,7 +4,7 @@
 #include "stdlib.h"
 #include "time.h"
 #include "math.h"
-
+#include <limits.h>
 /*
     Things that are still to do
     * This only works for one job
@@ -22,7 +22,7 @@ Job::Job() {
     srand(time(0));
     name = "job";
     res = 0;
-    max = 10000000;
+    max = INT_MAX;
     pos = 0;
     count = 0;
     stop = false;
@@ -41,7 +41,11 @@ void Job::monteCarlo() {
         float x = (float)rand() / (float)RAND_MAX;
         float y = (float)rand() / (float)RAND_MAX;
         if (sqrt(x*x + y*y) < 1.0) count++;
-        if (stop) return;
+        if (pos % 1000000 == 0) {
+		res = 4.0*(float)count / (float)max;
+		printf("res %f\n", res);
+	}
+	if (stop) return;
     }
     res = 4 * (float)count / (float)max;
 }
