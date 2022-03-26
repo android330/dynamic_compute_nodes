@@ -3,6 +3,7 @@
 #include <thread>
 #include <time.h>
 #include <limits.h>
+#include <stdlib.h>
 #include "job.hpp"
 
 #ifdef __arm__
