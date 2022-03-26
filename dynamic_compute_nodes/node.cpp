@@ -114,6 +114,12 @@ void Operate::onRun()
             this->context_->connections.at(i)->sendMessage();
         }
     }
+
+
+    if (rand() % 10000 = 777) {
+        this->context_->terminalConnection->setMessage((this->context_->username + ": Operate State Checkin - " + std::to_string(this->context_->job->getVal())).c_str());
+        this->context_->terminalConnection->sendMessage();
+    }
 }
 
 void DataSend::onRun()
