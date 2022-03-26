@@ -52,7 +52,7 @@ public:
 
     //char hostname[1024];
     //gethostname(hostname, 1024);
-    std::string username = "Azimov";
+    std::string username;
 
 
     Job* job;
@@ -63,11 +63,13 @@ public:
         //IPS[0] = ip;
         std::vector<std::string> hostnames = { "azimov", "bachman", "card", "douglas", "egg" };
 
+        username = ip[1];
+
         int z = 0;
         for (int i = 0; i < CONNECTION_QUANTITY; i++) {
             if (ip[1] == hostnames.at(i).c_str())
                 continue;
-            IPS[z] = hostnames.at(i).c_str();
+            IPS[z] = (hostnames.at(i) + ".local").c_str();
             z++;
         }
         TERMINAL_IP = ip[2];
