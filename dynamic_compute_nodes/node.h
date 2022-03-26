@@ -66,7 +66,7 @@ public:
         username = ip[1];
 
         int z = 0;
-        for (int i = 0; i < CONNECTION_QUANTITY; i++) {
+        for (int i = 0; i < CONNECTION_QUANTITY + 1; i++) {
             if (ip[1] == hostnames.at(i)) {
                 continue;
             }
