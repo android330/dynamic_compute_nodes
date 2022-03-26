@@ -61,7 +61,7 @@ void nodeConnection::connectToNode(){
         startServer();
         return;
     }
-    printf("Client(Port-%u) has connected to server\n", port);
+    //printf("Client(Port-%u) has connected to server\n", port);
 
     send_socket = &sock;
     while(true){
@@ -70,13 +70,13 @@ void nodeConnection::connectToNode(){
         if (valread)
             readString = buffer;
         else {
-            printf("Client(Port-%u) recieved disconnect...\n     transitioning to server...\n", port);
+            //printf("Client(Port-%u) recieved disconnect...\n     transitioning to server...\n", port);
             if (shutdown(sock, SHUT_RDWR))
                 return;
             close(sock);
             startServer();
         }
-        printf("Client(Port-%u) Recieved: %s\n",port,buffer );
+        //printf("Client(Port-%u) Recieved: %s\n",port,buffer );
     }
     return;
 
@@ -127,7 +127,7 @@ void  nodeConnection::startServer(){
         perror("accept");
         exit(EXIT_FAILURE);
     }
-    printf("Server(Port-%u) has connected to client\n", port);
+    //printf("Server(Port-%u) has connected to client\n", port);
 
     //printf("test0\n");
     send_socket = &new_socket;
@@ -137,13 +137,13 @@ void  nodeConnection::startServer(){
         if (valread)
             readString = buffer;
         else {
-            printf("Server(Port-%u) has found client disconnected\n     restarting server...\n", port);
+            //printf("Server(Port-%u) has found client disconnected\n     restarting server...\n", port);
             if (shutdown(new_socket, SHUT_RDWR))
                 return;
             close(new_socket);
             startServer();
         }
-        printf("Server(Port-%u) Recieved: %s\n",port,buffer );
+        //printf("Server(Port-%u) Recieved: %s\n",port,buffer );
     }
     return;
 }
