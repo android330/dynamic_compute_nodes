@@ -50,9 +50,9 @@ public:
 
     std::vector<nodeConnection*> connections;
 
-    char hostname[1024];
-    gethostname(hostname, 1024);
-    std::string username = hostname;
+    //char hostname[1024];
+    //gethostname(hostname, 1024);
+    std::string username = "Azimov";
 
 
     Job* job;
