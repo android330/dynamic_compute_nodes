@@ -35,6 +35,9 @@ void Idle::onRun()
             this->context_->job = new Job(recievedCrap.substr(1, recievedCrap.length() - 1));
             this->context_->job->startRun();
 
+            this->context_->terminalConnection->setMessage(std::getenv("USER") + ": Operate State Transition" + recievedCrap.substr(1, recievedCrap.length() - 1));
+            this->context_->terminalConnection->sendMessage();
+
 
             //signal to connecitng node that connection was accepted
             std::string sendTemp = std::to_string(ACCEPTEDCONNECTION_) + context_->job->send();
@@ -51,7 +54,7 @@ void Idle::onRun()
             this->context_->connections.at(i)->setMessage(std::to_string(SEEKINGCONNECTION_).c_str());
             this->context_->connections.at(i)->sendMessage();
             
-            this->context_->terminalConnection->setMessage("Connected to terminal");
+            this->context_->terminalConnection->setMessage(std::getenv("USER") + ": Operate State Transition - default");
             this->context_->terminalConnection->sendMessage();
 
             std::cout << "Transition to Operate State" << std::endl;
@@ -65,6 +68,10 @@ void Idle::onRun()
     //if 10 seconds elapsed
     if ((double)(clock() - start) * 1000.0 / CLOCKS_PER_SEC > 10000) {
         printf("10 seconds elapsed - ");
+
+        this->context_->terminalConnection->setMessage(std::getenv("USER") + ": Operate State Transition - timeout");
+        this->context_->terminalConnection->sendMessage();
+
         std::cout << "Transition to Operate State" << std::endl;
         this->context_->job = new Job();
         this->context_->job->startRun();
@@ -79,6 +86,9 @@ void Operate::onRun()
 #ifdef __arm__
     if (digitalRead(25) == 0)
       {
+          this->context_->terminalConnection->setMessage(std::getenv("USER") + ": DataSend State Transition - low power");
+          this->context_->terminalConnection->sendMessage();
+        
           std::cout << "Transition to DataSend State" << std::endl;
           this->context_->TransitionTo(new DataSend);
           return;
@@ -118,6 +128,9 @@ void DataSend::onRun()
 		continue;
 	}
 	std::string sendTemp = std::to_string(DATASEND_) + context_->job->send();
+        this->context_->terminalConnection->setMessage(std::getenv("USER") + ": Stop State Transition - " + context_->job->send());
+        this->context_->terminalConnection->sendMessage();
+
         this->context_->connections.at(i)->setMessage(sendTemp.c_str());
         this->context_->connections.at(i)->sendMessage();
     }
@@ -129,6 +142,9 @@ void Stop::onRun()
 #ifdef __arm__
     if (digitalRead(25) == 1)
     {
+        this->context_->terminalConnection->setMessage(std::getenv("USER") + ": Stop State Transition - regular power");
+        this->context_->terminalConnection->sendMessage();
+        
         std::cout << "Power Levels Suitiable" << std::endl << "Transition back to Operate State" << std::endl;
         this->context_->TransitionTo(new Operate);
         return;
