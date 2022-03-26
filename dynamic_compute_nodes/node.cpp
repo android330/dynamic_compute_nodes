@@ -120,7 +120,6 @@ void Operate::onRun()
 
     //if 10 seconds elapsed
     if ((double)(clock() - start) * 1000.0 / CLOCKS_PER_SEC > 10000) {
-        std::count << "asdfasdfasdfasdfasdfasdfasdfasdf" << std::endl;
         this->context_->terminalConnection->setMessage((this->context_->username + ": Operate State Checkin - " + std::to_string(this->context_->job->getVal())).c_str());
         this->context_->terminalConnection->sendMessage(); 
         start = clock();

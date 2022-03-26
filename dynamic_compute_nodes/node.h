@@ -61,9 +61,16 @@ public:
     {
         this->TransitionTo(state);
         //IPS[0] = ip;
-        for (int i = 0; i < CONNECTION_QUANTITY; i++)
-            IPS[i] = ip[i + 1];
-        TERMINAL_IP = ip[CONNECTION_QUANTITY + 1];
+        std::vector<std::string> hostnames = { "azimov", "bachman", "card", "douglas", "egg" };
+
+        int z = 0;
+        for (int i = 0; i < CONNECTION_QUANTITY; i++) {
+            if (ip[1] == hostnames.at(i).c_str())
+                continue;
+            IPS[z] = hostnames.at(i);
+            z++;
+        }
+        TERMINAL_IP = ip[2];
     }
 
     ~Node_Context(){delete state_;}
