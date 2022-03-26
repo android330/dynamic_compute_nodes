@@ -12,7 +12,7 @@ void Idle::onRun()
             temp = new nodeConnection(this->context_->IPS[i], this->context_->PORTS[i]);
             this->context_->connections.push_back(temp);
         }
-	this->context_->terminalConnection = new nodeConnection(this->context_->TERMINAL_IP, 8080);
+	    this->context_->terminalConnection = new nodeConnection(this->context_->TERMINAL_IP, 8080);
 
 
         startup = true;
@@ -82,7 +82,10 @@ void Idle::onRun()
 
 void Operate::onRun()
 {
-
+    if (!startup) {
+        start = clock();
+        startup = true;
+    }
 #ifdef __arm__
     if (digitalRead(25) == 0)
       {
@@ -115,10 +118,11 @@ void Operate::onRun()
         }
     }
 
-
-    if (rand() % 10000 == 777) {
+    //if 10 seconds elapsed
+    if ((double)(clock() - start) * 1000.0 / CLOCKS_PER_SEC > 10000) {
         this->context_->terminalConnection->setMessage((this->context_->username + ": Operate State Checkin - " + std::to_string(this->context_->job->getVal())).c_str());
-        this->context_->terminalConnection->sendMessage();
+        this->context_->terminalConnection->sendMessage(); 
+        start = clock();
     }
 }
 
@@ -148,7 +152,7 @@ void Stop::onRun()
 #ifdef __arm__
     if (digitalRead(25) == 1)
     {
-        this->context_->terminalConnection->setMessage((this->context_->username + ": Stop State Transition - regular power").c_str());
+        this->context_->terminalConnection->setMessage((this->context_->username + ": Operate State Transition - regular power").c_str());
         this->context_->terminalConnection->sendMessage();
         
         std::cout << "Power Levels Suitiable" << std::endl << "Transition back to Operate State" << std::endl;

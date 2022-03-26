@@ -91,6 +91,14 @@ private:
     clock_t start;
 public:
     void onRun() override;};
-class Operate : public Node_State{void onRun() override;};
+
+class Operate : public Node_State{
+private:
+    bool startup = false;
+    clock_t start;
+public:
+    void onRun() override;
+};
+
 class DataSend : public Node_State{void onRun() override;};
 class Stop : public Node_State{void onRun() override;};
