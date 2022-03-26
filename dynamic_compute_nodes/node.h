@@ -67,7 +67,7 @@ public:
 
         int z = 0;
         for (int i = 0; i < CONNECTION_QUANTITY; i++) {
-            if (ip[1] == hostnames.at(i).c_str())
+            if ((std::string str(ip[1])) == hostnames.at(i))
                 continue;
             std::cout << (hostnames.at(i) + ".local").c_str() << std::endl;
             IPS[z] = (hostnames.at(i) + ".local").c_str();
