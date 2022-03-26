@@ -2,6 +2,7 @@
 #include <vector>
 #include <thread>
 #include <time.h>
+#include <limits.h>
 #include "job.hpp"
 
 #ifdef __arm__
@@ -48,7 +49,13 @@ public:
 
     std::vector<nodeConnection*> connections;
 
-    std::string username = std::getenv("USER");
+    std::string username;
+    {
+        char hostname[HOST_NAME_MAX];
+        gethostname(hostname, HOST_NAME_MAX);
+        std::string username = hostname;
+    }
+
 
     Job* job;
 
