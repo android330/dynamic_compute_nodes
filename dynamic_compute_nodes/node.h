@@ -43,6 +43,9 @@ public:
     const char *IPS[CONNECTION_QUANTITY] = {"127.0.0.1", "127.0.0.1", "127.0.0.1", "127.0.0.1"};
     const int PORTS[CONNECTION_QUANTITY] = {8080, 8080, 8080, 8080};
 
+    const char *TERMINAL_IP = "127.0.0.1";
+    nodeConnection* terminalConnection;
+
     std::vector<nodeConnection*> connections;
 
     Job* job;
@@ -53,6 +56,7 @@ public:
         //IPS[0] = ip;
         for (int i = 0; i < CONNECTION_QUANTITY; i++)
             IPS[i] = ip[i + 1];
+        TERMINAL_IP = ip[CONNECTION_QUANTITY];
     }
 
     ~Node_Context(){delete state_;}

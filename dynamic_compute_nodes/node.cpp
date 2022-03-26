@@ -12,6 +12,9 @@ void Idle::onRun()
             temp = new nodeConnection(this->context_->IPS[i], this->context_->PORTS[i]);
             this->context_->connections.push_back(temp);
         }
+	this->context_->terminalConnection = new nodeConnection(this->context_->TERMINAL_IP, 8080);
+
+
         startup = true;
         start = clock();
     }
@@ -47,6 +50,9 @@ void Idle::onRun()
         {
             this->context_->connections.at(i)->setMessage(std::to_string(SEEKINGCONNECTION_).c_str());
             this->context_->connections.at(i)->sendMessage();
+            
+            this->context_->terminalConnection->setMessage("Connected to terminal");
+            this->context_->terminalConnection->sendMessage();
 
             std::cout << "Transition to Operate State" << std::endl;
             this->context_->job = new Job();
