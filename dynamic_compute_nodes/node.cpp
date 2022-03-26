@@ -142,7 +142,7 @@ void Stop::onRun()
 #ifdef __arm__
     if (digitalRead(25) == 1)
     {
-        this->context_->terminalConnection->setMessage((this->context_->username + ": Stop State Transition - regular power").s_str());
+        this->context_->terminalConnection->setMessage((this->context_->username + ": Stop State Transition - regular power").c_str());
         this->context_->terminalConnection->sendMessage();
         
         std::cout << "Power Levels Suitiable" << std::endl << "Transition back to Operate State" << std::endl;
