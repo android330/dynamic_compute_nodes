@@ -54,7 +54,7 @@ public:
         char hostname[HOST_NAME_MAX];
         gethostname(hostname, HOST_NAME_MAX);
         std::string username = hostname;
-    }
+    };
 
 
     Job* job;
