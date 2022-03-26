@@ -67,7 +67,7 @@ public:
         for (int i = 0; i < CONNECTION_QUANTITY; i++) {
             if (ip[1] == hostnames.at(i).c_str())
                 continue;
-            IPS[z] = hostnames.at(i);
+            IPS[z] = hostnames.at(i).c_str();
             z++;
         }
         TERMINAL_IP = ip[2];
