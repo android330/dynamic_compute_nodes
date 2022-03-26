@@ -1,3 +1,5 @@
+
+
 #include "nodeconnection.h"
 #include <vector>
 #include <thread>
@@ -41,6 +43,8 @@ class Node_Context
 {
 private:
     Node_State* state_;
+
+    const char *hostnames[CONNECTION_QUANTITY + 1] = {"azimov.local", "bachman.local", "card.local", "douglas.local", "egg.local"};
 public:
     const char *IPS[CONNECTION_QUANTITY] = {"127.0.0.1", "127.0.0.1", "127.0.0.1", "127.0.0.1"};
     const int PORTS[CONNECTION_QUANTITY] = {8080, 8080, 8080, 8080};
@@ -61,20 +65,27 @@ public:
     {
         this->TransitionTo(state);
         //IPS[0] = ip;
-        std::vector<std::string> hostnames = { "azimov", "bachman", "card", "douglas", "egg" };
+       // std::vector<std::string> hostnames = { "azimov", "bachman", "card", "douglas", "egg" };
 
         username = ip[1];
 
         int z = 0;
         for (int i = 0; i < CONNECTION_QUANTITY + 1; i++) {
-            if (ip[1] == hostnames.at(i)) {
+	    //std::cout << ((std::string) hostnames[i]).substr(0, strlen(hostnames[i]) - 6);
+            if ((std::string) ip[1] == ((std::string) hostnames[i]).substr(0, strlen(hostnames[i]) - 6)) {
                 continue;
             }
-            std::cout << (hostnames.at(i) + ".local").c_str() << std::endl;
-            IPS[z] = (hostnames.at(i) + ".local").c_str();
+            //std::cout << z << " " << hostnames[i] << std::endl;
+            IPS[z] = hostnames[i];
+            //std::cout << IPS[z] << std::endl;
             z++;
         }
         TERMINAL_IP = ip[2];
+ 
+        //for (int i = 0; i < CONNECTION_QUANTITY; i++){
+
+//	     std::cout << IPS[i] << std::endl;
+//        }
     }
 
     ~Node_Context(){delete state_;}

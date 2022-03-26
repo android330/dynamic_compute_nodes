@@ -12,6 +12,7 @@ void Idle::onRun()
             temp = new nodeConnection(this->context_->IPS[i], this->context_->PORTS[i]);
             this->context_->connections.push_back(temp);
         }
+	std::cout << this->context_->TERMINAL_IP << std::endl;
 	    this->context_->terminalConnection = new nodeConnection(this->context_->TERMINAL_IP, 8080);
 
 
