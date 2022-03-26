@@ -116,7 +116,7 @@ void Operate::onRun()
     }
 
 
-    if (rand() % 10000 = 777) {
+    if (rand() % 10000 == 777) {
         this->context_->terminalConnection->setMessage((this->context_->username + ": Operate State Checkin - " + std::to_string(this->context_->job->getVal())).c_str());
         this->context_->terminalConnection->sendMessage();
     }
