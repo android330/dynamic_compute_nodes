@@ -48,6 +48,8 @@ public:
 
     std::vector<nodeConnection*> connections;
 
+    std::string username = std::getenv("USER");
+
     Job* job;
 
     Node_Context(Node_State* state, const char* ip[]) : state_(nullptr)
