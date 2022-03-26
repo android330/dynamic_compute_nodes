@@ -39,9 +39,6 @@ public:
 class Node_Context
 {
 private:
-    char hostname[HOST_NAME_MAX];
-    gethostname(hostname, HOST_NAME_MAX);
-
     Node_State* state_;
 public:
     const char *IPS[CONNECTION_QUANTITY] = {"127.0.0.1", "127.0.0.1", "127.0.0.1", "127.0.0.1"};
@@ -52,7 +49,8 @@ public:
 
     std::vector<nodeConnection*> connections;
 
-
+    char hostname[1024];
+    gethostname(hostname, 1024);
     std::string username = hostname;
 
 
