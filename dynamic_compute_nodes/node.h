@@ -1,7 +1,11 @@
+
+
 #include "nodeconnection.h"
 #include <vector>
 #include <thread>
 #include <time.h>
+#include <limits.h>
+#include <stdlib.h>
 #include "job.hpp"
 
 #ifdef __arm__
@@ -9,7 +13,7 @@
 #endif
 
 
-#define CONNECTION_QUANTITY 3
+#define CONNECTION_QUANTITY 4
 
 #define SEEKINGCONNECTION_ 0
 #define ACCEPTEDCONNECTION_ 1
@@ -39,11 +43,21 @@ class Node_Context
 {
 private:
     Node_State* state_;
+
+    const char *hostnames[CONNECTION_QUANTITY + 1] = {"azimov.local", "bachman.local", "card.local", "douglas.local", "egg.local"};
 public:
-    const char *IPS[CONNECTION_QUANTITY] = {"127.0.0.1", "127.0.0.1", "127.0.0.1"};
-    const int PORTS[CONNECTION_QUANTITY] = {8080, 8080, 8080};
+    const char *IPS[CONNECTION_QUANTITY] = {"127.0.0.1", "127.0.0.1", "127.0.0.1", "127.0.0.1"};
+    const int PORTS[CONNECTION_QUANTITY] = {8080, 8080, 8080, 8080};
+
+    const char *TERMINAL_IP = "127.0.0.1";
+    nodeConnection* terminalConnection;
 
     std::vector<nodeConnection*> connections;
+
+    //char hostname[1024];
+    //gethostname(hostname, 1024);
+    std::string username;
+
 
     Job* job;
 
@@ -51,8 +65,27 @@ public:
     {
         this->TransitionTo(state);
         //IPS[0] = ip;
-        for (int i = 0; i < CONNECTION_QUANTITY; i++)
-            IPS[i] = ip[i + 1];
+       // std::vector<std::string> hostnames = { "azimov", "bachman", "card", "douglas", "egg" };
+
+        username = ip[1];
+
+        int z = 0;
+        for (int i = 0; i < CONNECTION_QUANTITY + 1; i++) {
+	    //std::cout << ((std::string) hostnames[i]).substr(0, strlen(hostnames[i]) - 6);
+            if ((std::string) ip[1] == ((std::string) hostnames[i]).substr(0, strlen(hostnames[i]) - 6)) {
+                continue;
+            }
+            //std::cout << z << " " << hostnames[i] << std::endl;
+            IPS[z] = hostnames[i];
+            //std::cout << IPS[z] << std::endl;
+            z++;
+        }
+        TERMINAL_IP = ip[2];
+ 
+        //for (int i = 0; i < CONNECTION_QUANTITY; i++){
+
+//	     std::cout << IPS[i] << std::endl;
+//        }
     }
 
     ~Node_Context(){delete state_;}
@@ -80,6 +113,14 @@ private:
     clock_t start;
 public:
     void onRun() override;};
-class Operate : public Node_State{void onRun() override;};
+
+class Operate : public Node_State{
+private:
+    bool startup = false;
+    clock_t start;
+public:
+    void onRun() override;
+};
+
 class DataSend : public Node_State{void onRun() override;};
 class Stop : public Node_State{void onRun() override;};
