@@ -37,8 +37,8 @@ void nodeConnection::connectToNode(){
         hostname = gethostbyname(ip);
         if(hostname == NULL)
         {
-            std::cout << (std::string) ip << std::endl;
-	    printf("\nInvalid Hostname\n");
+            std::cout << (std::string) ip;
+	    printf(" - Not Online\n");
             return;
         }
         else

@@ -30,7 +30,7 @@ void Idle::onRun()
         //if other connection was previously running, then new job created with startup information
         if(recievedCrap[0] - 48 == ACCEPTEDCONNECTION_)
         {
-            std::cout << "Transition to Operate State" << std::endl;
+            std::cout << "Transition to Operate State with data " << recievedCrap.substr(1, recievedCrap.length() - 1) << std::endl;
             
             //std::cout << recievedCrap << std::endl;
             this->context_->job = new Job(recievedCrap.substr(1, recievedCrap.length() - 1));
