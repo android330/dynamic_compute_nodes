@@ -12,6 +12,10 @@ void Idle::onRun()
             temp = new nodeConnection(this->context_->IPS[i], this->context_->PORTS[i]);
             this->context_->connections.push_back(temp);
         }
+	std::cout << this->context_->TERMINAL_IP << std::endl;
+	    this->context_->terminalConnection = new nodeConnection(this->context_->TERMINAL_IP, 8080);
+
+
         startup = true;
         start = clock();
     }
@@ -26,11 +30,14 @@ void Idle::onRun()
         //if other connection was previously running, then new job created with startup information
         if(recievedCrap[0] - 48 == ACCEPTEDCONNECTION_)
         {
-            std::cout << "Transition to Operate State" << std::endl;
+            std::cout << "Transition to Operate State with data " << recievedCrap.substr(1, recievedCrap.length() - 1) << std::endl;
             
             //std::cout << recievedCrap << std::endl;
             this->context_->job = new Job(recievedCrap.substr(1, recievedCrap.length() - 1));
             this->context_->job->startRun();
+
+            this->context_->terminalConnection->setMessage((this->context_->username + ": Operate State Transition" + recievedCrap.substr(1, recievedCrap.length() - 1)).c_str());
+            this->context_->terminalConnection->sendMessage();
 
 
             //signal to connecitng node that connection was accepted
@@ -47,6 +54,9 @@ void Idle::onRun()
         {
             this->context_->connections.at(i)->setMessage(std::to_string(SEEKINGCONNECTION_).c_str());
             this->context_->connections.at(i)->sendMessage();
+            
+            this->context_->terminalConnection->setMessage((this->context_->username + ": Operate State Transition - default").c_str());
+            this->context_->terminalConnection->sendMessage();
 
             std::cout << "Transition to Operate State" << std::endl;
             this->context_->job = new Job();
@@ -59,6 +69,10 @@ void Idle::onRun()
     //if 10 seconds elapsed
     if ((double)(clock() - start) * 1000.0 / CLOCKS_PER_SEC > 10000) {
         printf("10 seconds elapsed - ");
+
+        this->context_->terminalConnection->setMessage((this->context_->username + ": Operate State Transition - timeout").c_str());
+        this->context_->terminalConnection->sendMessage();
+
         std::cout << "Transition to Operate State" << std::endl;
         this->context_->job = new Job();
         this->context_->job->startRun();
@@ -69,10 +83,16 @@ void Idle::onRun()
 
 void Operate::onRun()
 {
-
+    if (!startup) {
+        start = clock();
+        startup = true;
+    }
 #ifdef __arm__
     if (digitalRead(25) == 0)
       {
+          this->context_->terminalConnection->setMessage((this->context_->username + ": DataSend State Transition - low power").c_str());
+          this->context_->terminalConnection->sendMessage();
+        
           std::cout << "Transition to DataSend State" << std::endl;
           this->context_->TransitionTo(new DataSend);
           return;
@@ -98,6 +118,13 @@ void Operate::onRun()
             this->context_->connections.at(i)->sendMessage();
         }
     }
+
+    //if 10 seconds elapsed
+    if ((double)(clock() - start) * 1000.0 / CLOCKS_PER_SEC > 10000) {
+        this->context_->terminalConnection->setMessage((this->context_->username + ": Operate State Checkin - " + std::to_string(this->context_->job->getVal())).c_str());
+        this->context_->terminalConnection->sendMessage(); 
+        start = clock();
+    }
 }
 
 void DataSend::onRun()
@@ -112,6 +139,9 @@ void DataSend::onRun()
 		continue;
 	}
 	std::string sendTemp = std::to_string(DATASEND_) + context_->job->send();
+        this->context_->terminalConnection->setMessage((this->context_->username + ": Stop State Transition - " + context_->job->send()).c_str());
+        this->context_->terminalConnection->sendMessage();
+
         this->context_->connections.at(i)->setMessage(sendTemp.c_str());
         this->context_->connections.at(i)->sendMessage();
     }
@@ -123,6 +153,9 @@ void Stop::onRun()
 #ifdef __arm__
     if (digitalRead(25) == 1)
     {
+        this->context_->terminalConnection->setMessage((this->context_->username + ": Operate State Transition - regular power").c_str());
+        this->context_->terminalConnection->sendMessage();
+        
         std::cout << "Power Levels Suitiable" << std::endl << "Transition back to Operate State" << std::endl;
         this->context_->TransitionTo(new Operate);
         return;
