@@ -31,7 +31,7 @@ void Idle::onRun()
         if(recievedCrap[0] - 48 == ACCEPTEDCONNECTION_)
         {
             std::cout << "Transition to Operate State with data " << recievedCrap.substr(1, recievedCrap.length() - 1) << std::endl;
-            
+
             //std::cout << recievedCrap << std::endl;
             this->context_->job = new Job(recievedCrap.substr(1, recievedCrap.length() - 1));
             this->context_->job->startRun();
@@ -105,6 +105,7 @@ void Operate::onRun()
         if(this->context_->connections.at(i)->getConnection()[0] - 48 == DATASEND_)
         {
             std::string sendTemp = this->context_->connections.at(i)->getConnection();
+            std::cout << "Recieved - " << sendTemp << std::endl;
 	    if (sendTemp.length() > 1)
                 this->context_->job->recievedData(sendTemp.substr(1, sendTemp.length() - 1));
         }
@@ -139,6 +140,7 @@ void DataSend::onRun()
 		continue;
 	}
 	std::string sendTemp = std::to_string(DATASEND_) + context_->job->send();
+        std::cout << "Sent - " << sendTemp << std::endl;
         this->context_->terminalConnection->setMessage((this->context_->username + ": Stop State Transition - " + context_->job->send()).c_str());
         this->context_->terminalConnection->sendMessage();
 

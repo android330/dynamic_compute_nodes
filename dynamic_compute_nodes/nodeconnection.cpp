@@ -43,8 +43,10 @@ void nodeConnection::connectToNode(){
         }
         else
         {
+	    std::cout << (std::string) ip << " - Resolved to ";
             //sets new ip to the resolved hostname if it was valid
             this->ip = inet_ntoa(*((struct in_addr *) hostname->h_addr_list[0]));
+	    std::cout << (std::string) ip << std::endl;
         }
     }
 
