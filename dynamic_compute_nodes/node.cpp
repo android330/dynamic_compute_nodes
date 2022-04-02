@@ -66,9 +66,9 @@ void Idle::onRun()
         }
     }
 
-    //if 10 seconds elapsed
-    if ((double)(clock() - start) * 1000.0 / CLOCKS_PER_SEC > 10000) {
-        printf("10 seconds elapsed - ");
+    //if 30 seconds elapsed
+    if ((double)(clock() - start) * 1000.0 / CLOCKS_PER_SEC > 30000) {
+        printf("30 seconds elapsed - ");
 
         this->context_->terminalConnection->setMessage((this->context_->username + ": Operate State Transition - timeout").c_str());
         this->context_->terminalConnection->sendMessage();
