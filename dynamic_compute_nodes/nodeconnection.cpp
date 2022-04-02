@@ -79,7 +79,7 @@ void nodeConnection::connectToNode(){
             close(sock);
             startServer();
         }
-        printf("Client(Port-%u) Recieved: %s\n",port,buffer );
+        //printf("Client(Port-%u) Recieved: %s\n",port,buffer );
     }
     return;
 
@@ -146,7 +146,7 @@ void  nodeConnection::startServer(){
             close(new_socket);
             startServer();
         }
-        printf("Server(Port-%u) Recieved: %s\n",port,buffer );
+        //printf("Server(Port-%u) Recieved: %s\n",port,buffer );
     }
     return;
 }
