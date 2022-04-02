@@ -102,9 +102,10 @@ void Operate::onRun()
     char buf[sizeof(int) * 3 + 2];
     for(int i = 0; i < this->context_->connections.size(); i++)
     {
-        if(this->context_->connections.at(i)->getConnection()[0] - 48 == DATASEND_)
+        std::string sendTemp = this->context_->connections.at(i)->getConnection();
+        if(sendTemp[0] - 48 == DATASEND_)
         {
-            std::string sendTemp = this->context_->connections.at(i)->getConnection();
+            //std::string sendTemp = this->context_->connections.at(i)->getConnection();
             std::cout << "Recieved - " << sendTemp << std::endl;
 	    if (sendTemp.length() > 1)
                 this->context_->job->recievedData(sendTemp.substr(1, sendTemp.length() - 1));
