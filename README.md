@@ -26,5 +26,5 @@ make
 ./node.out azimov 127.0.0.1
 ```
 
-## Other
-Terminal was an *unimplemented* aspect of this proejct, it is supposed to be run not on a raspberry pi but a windows computer that san see what is going on in each of the nodes. *Unimplemnted* because it fully works, but requires a home trusted network to be used and disabled firewall.
+## Notice About Terminal
+Terminal was an *unimplemented* aspect of this proejct, it is supposed to be run not on a raspberry pi but a windows computer that san see what is going on in each of the nodes. *Unimplemnted* because it fully works, but requires a home trusted network to be used and disabled firewall, and even then...
